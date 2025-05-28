@@ -1,0 +1,12 @@
+{
+  "reset password": "To reset your password, click on 'Forgot Password' at the login page. You'll receive a reset link via email.",
+  "cannot login": "Please check that your email and password are correct. If you've forgotten your password, use the reset password option.",
+  "pricing plans": "We offer Free, Pro, and Enterprise plans. Visit our Pricing page for detailed features and monthly costs.",
+  "slack integration": "You can integrate with Slack by going to Settings > Integrations and clicking on 'Connect to Slack'.",
+  "data export": "You can export your data as CSV from your dashboard under Account Settings > Export.",
+  "change email": "To change your registered email address, go to Profile Settings and update your email.",
+  "cancel subscription": "To cancel your subscription, go to Billing > Manage Subscription and click 'Cancel Plan'.",
+  "mobile app": "Yes, we offer a mobile app for both iOS and Android. Search 'NullAxis' on the App Store or Google Play.",
+  "two factor authentication": "Enable 2FA by visiting Settings > Security and following the instructions to link your authenticator app.",
+  "team management": "Admins can add or remove team members under Settings > Team Management."
+}
