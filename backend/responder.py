@@ -1,6 +1,6 @@
 from backend.kb_search import semantic_search
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
-from backend.llm_utils import query_llm
+from backend.llm_utils import extract_department,extract_feature,query_llm
 import json 
 import re
 import os
@@ -18,13 +18,11 @@ conversation_state = {
     }
 
 def handle_unmatched_tech_issue(query: str):
-    prompt = f"What department should handle this technical support query: '{query}'? Respond with only the department name."
-    dept = query_llm(prompt)
+    dept = extract_department(query)
     return (f"Thanks for your query. I couldn't find an immediate answer, but I've routed your request to our {dept} team. They will get back to you shortly.",dept)
 
 def extract_feature_request(query: str):
-    prompt = f"Extract the specific product or feature being requested in this sentence: '{query}'. Respond with only the name."
-    feature = query_llm(prompt)
+    feature = extract_feature(query)
     return (f"Thank you for your suggestion! We've logged your feature request for {feature} for our product team to review.",feature)
 
 def is_negative_sentiment(text):
@@ -44,17 +42,17 @@ def save_sales_leads(leads):
     with open(SALES_FILE, "w") as f:
         json.dump(leads, f, indent=2)
 
-def extract_company_name(text):
-    prompt = f"Extract the company name from this message: '{text}'. If not found, say 'None'."
+def extract_company_name(text: str) -> str | None:
+    prompt = f"Extract the company name from this message: '{text}'. If not found, respond with 'None'."
     result = query_llm(prompt)
     match = re.search(r"(?i)company\s*[:\-]?\s*(.+)", result)
-    return match.group(1).strip() if match else (None if "None" in result else result.strip())
+    return match.group(1).strip() if match else (None if "none" in result.lower() else result.strip())
 
-def extract_team_size(text):
-    prompt = f"Extract number of team members from this message: '{text}'. If not found, say 'None'."
+def extract_team_size(text: str) -> int | None:
+    prompt = f"Extract the number of team members from this message: '{text}'. If not found, respond with 'None'."
     result = query_llm(prompt)
-    match = re.search(r"(\d+)", result)
-    return int(match.group(1)) if match else None
+    match = re.search(r"\b\d+\b", result)
+    return int(match.group(0)) if match else (None if "none" in result.lower() else None)
 
 def process_sales_lead(conversation_state: dict, user_input: str,user_email: str) -> tuple[str, dict]:
     #conversation_state.setdefault("additional_info", "")
@@ -101,6 +99,7 @@ def process_sales_lead(conversation_state: dict, user_input: str,user_email: str
 
 
 def generate_response(message: str, email : str, intent :str = None):
+    global conversation_state
     escalate = False
     if is_negative_sentiment(message):
         with open('negative_sentiment.json', 'a') as f:
@@ -144,4 +143,4 @@ def generate_response(message: str, email : str, intent :str = None):
                 f.write("\n")
         return (response, conversation_state)
 
-    return (..., conversation_state)
+    return ("", conversation_state)

@@ -15,7 +15,7 @@ def semantic_search(query: str, threshold: float = 0.7):
     with open("knowledge_base.json") as f:
         kb = json.load(f)
 
-    combined_entries = [f"{k}. {v}" for k, v in kb.items()]
+    combined_entries = [f"{k}" for k, v in kb.items()]
     entry_embeddings = model.encode(combined_entries, convert_to_tensor=True)
     query_embedding = model.encode(query, convert_to_tensor=True)
 

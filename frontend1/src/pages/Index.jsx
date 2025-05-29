@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef} from 'react';
 import './Index.css';
 
 const Index = () => {
@@ -12,23 +12,27 @@ const Index = () => {
   const validateEmail = (email) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
+  const indexRef = useRef(0);
+
   useEffect(() => {
-    if (response && response !== displayedResponse) {
+    if (response) {
       setIsTyping(true);
       setDisplayedResponse('');
-      let index = 0;
+      indexRef.current = 0;
+
       const timer = setInterval(() => {
-        if (index < response.length) {
-          setDisplayedResponse(response.slice(0, index + 1));
-          index++;
+        if (indexRef.current < response.length) {
+          setDisplayedResponse(response.slice(0, indexRef.current + 1));
+          indexRef.current += 1;
         } else {
           setIsTyping(false);
           clearInterval(timer);
         }
       }, 30);
+
       return () => clearInterval(timer);
     }
-  }, [response, displayedResponse]);
+  }, [response]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,7 +55,7 @@ const Index = () => {
       const res = await fetch('http://localhost:8000/query', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: query }),
+        body: JSON.stringify({ email: email, message: query }),
       });
       const data = await res.json();
       setResponse(data.response);

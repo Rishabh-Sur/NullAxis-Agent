@@ -32,5 +32,5 @@ async def handle_query(query: CustomerQuery):
     intent = conversation_state.get("active_intent")
     if intent is None:
         intent = classify_intent(query.message)
-    response, conversation_state = generate_response(query.message, intent,query.email)
+    response, conversation_state = generate_response(query.message,query.email,intent)
     return {"response": response}
