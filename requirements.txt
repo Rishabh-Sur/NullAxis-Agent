@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+sentence-transformers
+openai
+pydantic
+transformers
+torch
+vaderSentiment
+python-dotenv
