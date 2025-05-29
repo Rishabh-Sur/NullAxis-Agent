@@ -80,7 +80,13 @@ to install node modules (use must have nodejs already installed on your system)
 
 # Starting the Backend server
 
-Go to root directory(outside backend folder) and run : uvicorn backend.main:app --reload 
+Go to root directory(outside backend folder) and activate the environment by running the script:
+
+myenv\Scripts\activate (for Windows) and source myenv/bin/activate (for Linux/macOS) 
+  
+Then run the script:
+
+uvicorn backend.main:app --reload 
 
 # Starting the Frontend server
 
