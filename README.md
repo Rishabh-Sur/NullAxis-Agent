@@ -68,7 +68,7 @@ We use Gemini 1.5 flash API for the query classification and info extraction tas
 But for using this, API key is needed. Login to your google ai studio account and generate GOOGLE_API_KEY
 
 Make a file .env in the root directory and store the api key there as:
- OPENAI_API_KEY= XXXXXXXXXX
+GOOGLE_API_KEY= XXXXXXXXXX
 
 ### Frontend (React.js)
 
