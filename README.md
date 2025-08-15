@@ -63,9 +63,9 @@ myenv\Scripts\activate   for  Windows
 Next inside the created environment run the command: 
 pip install -r requirements.txt
 
-We use Open AI API for the query classification and info extraction tasks
+We use Gemini 1.5 flash API for the query classification and info extraction tasks
 
-But for using this, API key is needed. Login to your openai account and generate OPENAI_API_KEY
+But for using this, API key is needed. Login to your google ai studio account and generate GOOGLE_API_KEY
 
 Make a file .env in the root directory and store the api key there as:
  OPENAI_API_KEY= XXXXXXXXXX
